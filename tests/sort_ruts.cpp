@@ -4,75 +4,80 @@
 #include <fstream>
 #include <string>
 #include <vector>
+using namespace std;
 
 int main(int argc, char* argv[]) {
-    if (argc == 2 && std::string(argv[1]) == "tiempo_ejecucion") {
-        std::string files[] = {"ruts_100.txt", "ruts_1000.txt", "ruts_10000.txt", "ruts_50000.txt", "ruts_100000.txt", "ruts_500000.txt", "ruts_1000000.txt", "ruts_10000000.txt", "ruts_50000000.txt", "ruts_100000000.txt"};        
+    if (argc == 2 && string(argv[1]) == "tiempo_ejecucion") {
+        string files[] = {"ruts_100.txt", "ruts_1000.txt", "ruts_10000.txt", "ruts_50000.txt", "ruts_100000.txt", "ruts_500000.txt", "ruts_1000000.txt", "ruts_10000000.txt", "ruts_50000000.txt", "ruts_100000000.txt"};        
         int numFiles = sizeof(files) / sizeof(files[0]);
 
         int n;
         float* A;
+        double x;
 
+        cout << "Archivo |\tInsertSort |\tMergeSort |\tQuickSort |\tRadixSort" << endl;
+        cout << "------------------------------------------------------------" << endl;
         for (int i = 0; i < numFiles; ++i) {
+            cout << files[0] << " |\t";
             A = sort::open_file(files[i], n);
-            double x = sort::insertTime(A, n);
-            std::cout << "Insert: "<< x << std::endl;
+            x = sort::insertTime(A, n);
+            cout << x << " |\t";
             x = sort::mergeTime(A, n);
-            std::cout << "Merge: "<< x << std::endl;
+            cout << x << " |\t";
             x = sort::quickTime(A, n);
-            std::cout << "Quick: "<< x << std::endl;
+            cout << x << " |\t";
             x = sort::radixTime(A, n);
-            std::cout << "Radix: "<< x << std::endl;
+            cout << x << endl;
             delete[] A;
         }
-
-        return 6;
+        cout << "------------------------------------------------------------" << endl;
+        return 0;
     }
 
     if (argc != 3) {
-        std::cerr << "Error: faltan argumentos" << std::endl;
+        cerr << "Error: faltan argumentos" << endl;
         return 1;
     }
 
-    std::string nombreArchivo = argv[1];
+    string nombreArchivo = argv[1];
     char caracter = argv[2][0];
 
     int tamano;
     float* arreglo = sort::open_file(nombreArchivo, tamano);
 
     if (!arreglo) {
-        std::cerr << "Error: el archivo '" << nombreArchivo << "' no existe o no se encuentra en la ruta especificada" << std::endl;
+        cerr << "Error: el archivo '" << nombreArchivo << "' no existe o no se encuentra en la ruta especificada" << endl;
         delete[] arreglo;
         return 2;
     }
 
     switch (caracter) {
         case 'I':
-            std::cout << "Ordenado con: InsertSort" << std::endl;
+            cout << "Ordenado con: InsertSort" << endl;
             sort::insertSort(arreglo, tamano); // Ordena el arreglo con InsertSort
             break;
         case 'M':
-            std::cout << "Ordenado con: MergeSort" << std::endl;
+            cout << "Ordenado con: MergeSort" << endl;
             sort::mergeSort(arreglo, 0, tamano - 1); // Ordena el arreglo con MergeSort
             break;
         case 'Q':
-            std::cout << "Ordenado con: QuickSort" << std::endl;
+            cout << "Ordenado con: QuickSort" << endl;
             sort::quickSort(arreglo, tamano); // Ordena el arreglo con QuickSort
             break;
         case 'R':
-            std::cout << "Ordenado con: RadixSort" << std::endl;
+            cout << "Ordenado con: RadixSort" << endl;
             sort::radixSort(arreglo, tamano); // Ordena el arreglo con RadixSort
             break;
         default:
-            std::cerr << "Error: Carácter no permitido. Debe ser I, M, Q, o R." << std::endl;
+            cerr << "Error: Carácter no permitido. Debe ser I, M, Q, o R." << endl;
             delete[] arreglo;
             return 3;
     }
 
     if (sort::save_file(nombreArchivo, arreglo, tamano)) {
-        std::cout << "Archivo generado: " << nombreArchivo << ".sorted" << std::endl;
+        cout << "Archivo generado: " << nombreArchivo << ".sorted" << endl;
     } else {
-        std::cerr << "Error al guardar el archivo ordenado." << std::endl;
+        cerr << "Error al guardar el archivo ordenado." << endl;
     }
 
     delete[] arreglo;

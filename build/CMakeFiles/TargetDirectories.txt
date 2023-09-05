@@ -1,0 +1,3 @@
+/home/edauandes/tareas/tarea_1/sort/build/CMakeFiles/sort_ruts.dir
+/home/edauandes/tareas/tarea_1/sort/build/CMakeFiles/edit_cache.dir
+/home/edauandes/tareas/tarea_1/sort/build/CMakeFiles/rebuild_cache.dir

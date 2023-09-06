@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
         cout << "Archivo |\tInsertSort |\tMergeSort |\tQuickSort |\tRadixSort" << endl;
         cout << "------------------------------------------------------------" << endl;
         for (int i = 0; i < numFiles; ++i) {
-            cout << files[0] << " |\t";
+            cout << files[i] << " |\t";
             A = sort::open_file(files[i], n);
             x = sort::insertTime(A, n);
             cout << x << " |\t";
